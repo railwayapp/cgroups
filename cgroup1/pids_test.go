@@ -43,8 +43,7 @@ func TestPids(t *testing.T) {
 	}
 	resources := specs.LinuxResources{}
 	resources.Pids = &specs.LinuxPids{}
-	pidsLimit := int64(10)
-	resources.Pids.Limit = &pidsLimit
+	resources.Pids.Limit = int64(10)
 	err = pids.Create("test", &resources)
 	if err != nil {
 		t.Fatal(err)
@@ -70,7 +69,7 @@ func TestPids(t *testing.T) {
 		t.Fatalf("expected pids limit %q but received %q",
 			uint64(5), metrics.Pids.Current)
 	}
-	pidsLimit = 15
+	resources.Pids.Limit = int64(15)
 	err = pids.Update("test", &resources)
 	if err != nil {
 		t.Fatal(err)
@@ -204,10 +203,9 @@ func BenchmarkTestPids(b *testing.B) {
 	if pids == nil {
 		b.Fatal("pids is nil")
 	}
-	pidsLimit := int64(10)
 	resources := specs.LinuxResources{
 		Pids: &specs.LinuxPids{
-			Limit: &pidsLimit,
+			Limit: 10,
 		},
 	}
 

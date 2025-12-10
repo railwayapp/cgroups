@@ -221,9 +221,9 @@ func ToResources(spec *specs.LinuxResources) *Resources {
 		}
 		resources.HugeTlb = &hugeTlbUsage
 	}
-	if pids := spec.Pids; pids != nil && pids.Limit != nil {
+	if pids := spec.Pids; pids != nil {
 		resources.Pids = &Pids{
-			Max: *pids.Limit,
+			Max: pids.Limit,
 		}
 	}
 	if i := spec.BlockIO; i != nil {
